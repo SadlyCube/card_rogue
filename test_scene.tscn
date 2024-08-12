@@ -1,0 +1,88 @@
+[gd_scene load_steps=3 format=3 uid="uid://cqy0oq7jhuows"]
+
+[ext_resource type="PackedScene" uid="uid://dsc1fp0r3j4s5" path="res://prefabs/floor_tile.tscn" id="1_6cm4w"]
+[ext_resource type="PackedScene" uid="uid://cxuexq634wq6p" path="res://prefabs/player.tscn" id="2_7fgfu"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="base" type="Node3D" parent="."]
+
+[node name="floor_tile" parent="base" instance=ExtResource("1_6cm4w")]
+
+[node name="floor_tile2" parent="base" instance=ExtResource("1_6cm4w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2)
+
+[node name="floor_tile3" parent="base" instance=ExtResource("1_6cm4w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, 0)
+
+[node name="floor_tile4" parent="base" instance=ExtResource("1_6cm4w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -2)
+
+[node name="floor_tile5" parent="base" instance=ExtResource("1_6cm4w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -2)
+
+[node name="floor_tile6" parent="base" instance=ExtResource("1_6cm4w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, 0)
+
+[node name="floor_tile7" parent="base" instance=ExtResource("1_6cm4w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
+
+[node name="floor_tile8" parent="base" instance=ExtResource("1_6cm4w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -4)
+
+[node name="floor_tile9" parent="base" instance=ExtResource("1_6cm4w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6)
+
+[node name="floor_tile10" parent="base" instance=ExtResource("1_6cm4w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -6)
+
+[node name="floor_tile11" parent="base" instance=ExtResource("1_6cm4w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -8)
+
+[node name="floor_tile12" parent="base" instance=ExtResource("1_6cm4w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0, -8)
+
+[node name="floor_tile13" parent="base" instance=ExtResource("1_6cm4w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -2)
+
+[node name="floor_tile14" parent="base" instance=ExtResource("1_6cm4w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, 0)
+
+[node name="floor_tile15" parent="base" instance=ExtResource("1_6cm4w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -2)
+
+[node name="floor_tile16" parent="base" instance=ExtResource("1_6cm4w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, 0)
+
+[node name="floor_tile17" parent="base" instance=ExtResource("1_6cm4w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -4)
+
+[node name="floor_tile18" parent="base" instance=ExtResource("1_6cm4w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -4)
+
+[node name="floor_tile19" parent="base" instance=ExtResource("1_6cm4w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -6)
+
+[node name="floor_tile20" parent="base" instance=ExtResource("1_6cm4w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0, -8)
+
+[node name="floor_tile21" parent="base" instance=ExtResource("1_6cm4w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -8)
+
+[node name="floor_tile22" parent="base" instance=ExtResource("1_6cm4w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -4)
+
+[node name="floor_tile23" parent="base" instance=ExtResource("1_6cm4w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -8)
+
+[node name="floor_tile24" parent="base" instance=ExtResource("1_6cm4w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8, 0, -6)
+
+[node name="floor_tile25" parent="base" instance=ExtResource("1_6cm4w")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6, 0, -6)
+
+[node name="player" parent="." instance=ExtResource("2_7fgfu")]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0, 1, 0)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.5, 0.866025, 0, -0.866025, 0.5, 0, 8, 6)
