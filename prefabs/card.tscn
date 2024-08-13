@@ -1,22 +1,24 @@
-[gd_scene load_steps=5 format=3 uid="uid://c2ex7sc00j26e"]
+[gd_scene load_steps=6 format=3 uid="uid://c2ex7sc00j26e"]
 
 [ext_resource type="Texture2D" uid="uid://iq6annnenv8" path="res://textures/vector/card.svg" id="1_3d1xn"]
-[ext_resource type="Script" path="res://prefabs/card_event.gd" id="1_7taqb"]
+[ext_resource type="Script" path="res://scripts/card_event.gd" id="1_ol2ru"]
+[ext_resource type="PackedScene" uid="uid://ogyvgadruwq" path="res://prefabs/cursor.tscn" id="2_plu1r"]
 [ext_resource type="Texture2D" uid="uid://xc4najr4p06y" path="res://textures/vector/orange.svg" id="3_r4obm"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_o12eg"]
 size = Vector3(6, 10, 1)
 
 [node name="card" type="Node3D"]
-transform = Transform3D(0.2, -3.55271e-15, -1.42109e-14, -1.24345e-14, 0.2, -2.98023e-08, 2.4869e-14, 2.98023e-08, 0.2, 0, -3, -2)
-script = ExtResource("1_7taqb")
+transform = Transform3D(0.2, -3.55271e-15, -1.42109e-14, -1.24345e-14, 0.2, -2.98023e-08, 2.4869e-14, 2.98023e-08, 0.2, 0, 0, 0)
+script = ExtResource("1_ol2ru")
+cursor = ExtResource("2_plu1r")
 
-[node name="Sprite3D" type="Sprite3D" parent="."]
+[node name="card_face" type="Sprite3D" parent="."]
 transform = Transform3D(1, -1.42109e-14, 0, 7.10543e-15, 1, 0, 4.26326e-14, 0, 1, 0, 0, 0)
 no_depth_test = true
 texture = ExtResource("1_3d1xn")
 
-[node name="Sprite3D" type="Sprite3D" parent="Sprite3D"]
+[node name="Sprite3D" type="Sprite3D" parent="card_face"]
 transform = Transform3D(1, 7.19981e-21, -2.03288e-20, -7.67624e-20, 1, 0, 0, 0, 1, 0.324917, 2.86102e-06, 0.514832)
 texture = ExtResource("3_r4obm")
 
