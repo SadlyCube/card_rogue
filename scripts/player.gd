@@ -8,9 +8,15 @@ var card_selected: bool = false
 const SPEED = 7.0
 const JUMP_VELOCITY = 0.0
 var card_count: int = 10
+var card_bank: int = 40
 var hand: Node3D
 var main_cam: Camera3D
 
+func _ready():
+	main_cam = get_node("main_cam")
+	hand = main_cam.get_node("hand")
+	for no in range(card_count):
+		spawn_card(card_pref, no, hand)
 
 func spawn_card(pref, card_no: int, hand_object):
 	var card = pref.instantiate()
@@ -34,16 +40,6 @@ func check_hand(hand):
 		card_selected = true
 	else:
 		card_selected = false
-
-func _ready():
-	main_cam = get_node("main_cam")
-	hand = main_cam.get_node("hand")
-	for no in range(card_count):
-		spawn_card(card_pref, no, hand)
-	
-func _process(delta):
-	check_hand(hand)
-	cursor_operator(get_tree().root.get_child(0))
 
 func process_cursor(pointer, position):
 	pointer.position = position
@@ -85,10 +81,14 @@ func cursor_operator(scene):
 		if scene.get_node_or_null("cursor"):
 			scene.get_node("cursor").queue_free() 
 
+func reload():
+	if card_count < 15 and card_bank > 0:
+		card_count += 1
+		card_bank -= 1
+		spawn_card(card_pref, card_count-1, hand)
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
-
-
 func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
@@ -110,3 +110,17 @@ func _physics_process(delta):
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	move_and_slide()
+
+#func _unhandled_input(event):
+	#if event is InputEventKey:
+		#if event.pressed and event.keycode == 'reload':
+			#reload()
+func process_actions():
+	if Input.is_action_just_pressed("reload"):
+		reload()
+
+func _process(delta):
+	check_hand(hand)
+	cursor_operator(get_tree().root.get_child(0))
+	process_actions()
+	print(card_bank)

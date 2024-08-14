@@ -1,7 +1,7 @@
 extends Node3D
 
-@export var order:int = 0
-@export var card_count: int = 1
+var order:int = 0
+var card_count: int = 1
 
 @export var box_pref: PackedScene
 
@@ -91,6 +91,9 @@ func read_drop(scene: Node3D, selected: bool):
 		
 		on_hand = false
 		
+		var player = scene.get_node("player")
+		player.card_count -= 1
+		
 		var new_position = pointer.position
 		return new_position
 
@@ -123,25 +126,6 @@ func drop_card(on_hand: bool, drop_position):
 				cast_effect()
 				queue_free()
 
-func cheack_dead_zone(camera: Camera3D):
-	var mpos = mouse_position()
-	var hand = get_node("..")
-	var x_list = []
-	var y_cen
-	for card in hand.get_children():
-		var projection = camera.unproject_position(card.global_transform.origin)
-		x_list.append(projection.x)
-		y_cen = projection.y
-	var x_min = x_list.min()
-	var x_max = x_list.max()
-	var y_max = y_cen + 50
-	var y_min = y_cen - 50
-
-	if mpos.x < x_max and mpos.x > x_min and mpos.y < y_max and mpos.y > y_min:
-		dead_zoned = true
-	else:
-		dead_zoned = false
-
 func _unhandled_input(event):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
@@ -156,10 +140,12 @@ func _unhandled_input(event):
 				selected = false
 
 func _on_area_3d_mouse_entered():
+	dead_zoned = true
 	if not holded:
 		selected = true
 
 func _on_area_3d_mouse_exited():
+	dead_zoned = false
 	if not holded:
 		selected = false
 
@@ -168,6 +154,4 @@ func _process(delta):
 	if not holded and on_hand:
 		select_card(selected)
 		update_cards(order, card_count)
-	cheack_dead_zone(main_cam)
 	drop_card(on_hand, drop_position)
-	print(dead_zoned)
