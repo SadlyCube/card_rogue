@@ -3,12 +3,18 @@ extends Node3D
 @export var order:int = 0
 @export var card_count: int = 1
 
-@export var cursor: PackedScene
+@export var box_pref: PackedScene
+
+var dead_zoned: bool = false
+
+var drop_position
+var drop_size: Vector3
 
 var scene: Node3D
 
 var selected: bool = false
 var holded: bool = false
+var on_hand: bool = true
 
 var origin_y: float = 0
 var desire_y: float
@@ -32,19 +38,18 @@ func _ready():
 	desire_size = origin_size
 	real_size = origin_size
 	
+	drop_size = scale/5
+
 func mouse_position():
 	return get_viewport().get_mouse_position()
-	
+
 func get_rotate(main_cam):
 	var card_center = main_cam.unproject_position(global_transform.origin)
 	var width = get_viewport().size.x
 	var x_offset = mouse_position().x - card_center.x
-	var y_offset = mouse_position().y - card_center.y
-		
+	var y_offset = mouse_position().y - card_center.y	
 	var  magnitude = 0.5
-	
 	var offset = Vector3(y_offset, x_offset, 0)
-	
 	return offset.normalized() * magnitude
 
 func rotate_card(selected, main_cam):
@@ -72,56 +77,70 @@ func select_card(selected):
 func update_cards(order, card_count):
 	var new_position = float(order) - float(card_count-1)/2
 	position.x = lerp(position.x, new_position, 0.1)
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 
-func read_position():
-	var ray_lenght = 500.0
-	var from = main_cam.project_ray_origin(mouse_position())
-	var to = main_cam.project_ray_normal(mouse_position()) * ray_lenght
-	var space = get_world_3d().direct_space_state
-	var rayQuery = PhysicsRayQueryParameters3D.new()
-	rayQuery.exclude = [scene.get_node_or_null("player")]
-	#rayQuery.collision_mask = 
-	rayQuery.from = from
-	rayQuery.to = to
-	#print('from ', from, ' to ', to)
-	var res = space.intersect_ray(rayQuery)
-	if res.size()>1:
-		return [true, res.position]
-	else:
-		return [false, Vector3(0,0,0)]
-
-func process_cursor(pointer, position):
-	pointer.position = position
-		#else:
-			#point.queue_free() 
+func read_drop(scene: Node3D, selected: bool):
+	var pointer = scene.get_node_or_null("cursor")
+	if pointer and selected:
+		var new_origin_rotation = to_global(rotation)
+		var new_origin_position = to_global(position)
 		
+		get_parent().remove_child(self)
+		scene.add_child(self)
+		position = new_origin_position
+		rotation = new_origin_rotation
+		
+		on_hand = false
+		
+		var new_position = pointer.position
+		return new_position
 
+		
+		#queue_free()
 
-func cursor_operator(selected, holded, scene):
-	var hit = read_position()[0]
-	var position = read_position()[1]
-	if hit:
-		var pointer: Node3D
-		if not scene.get_node_or_null("cursor"):
-			pointer = cursor.instantiate()
-			scene.add_child(pointer)
+func cast_box(drop_point):
+	var box = box_pref.instantiate()
+	scene.add_child(box)
+	box.position = drop_point
+
+func cast_effect():
+	cast_box(drop_position)
+
+func update_selector(holded: bool, pointer: Node3D):
+	if pointer:
+		if holded:
+			pointer.get_node("range_selector").visible = true
 		else:
-			pointer = scene.get_node("cursor")
-			process_cursor(pointer, position)
-	else:
-		if scene.get_node_or_null("cursor"):
-			scene.get_node("cursor").queue_free() 
-	#process_cursor(selected, holded, scene)
-	#if selected and holded:
-		#pass
+			pointer.get_node("range_selector").visible = false
 
-func _process(delta):
-	rotate_card(selected, main_cam)
-	if not holded:
-		select_card(selected)
-		update_cards(order, card_count)
-	cursor_operator(selected, holded, scene)
+func drop_card(on_hand: bool, drop_position):
+	if not on_hand:
+		if drop_position:
+			position = lerp(position, drop_position, 0.1)
+			scale = lerp(scale, drop_size, 0.1)
+			#rotation = lerp(rotation, Vector3(-90,0,0), 1)
+			var dist = position.distance_to(drop_position)
+			if dist <= 0.1:
+				cast_effect()
+				queue_free()
+
+func cheack_dead_zone(camera: Camera3D):
+	var mpos = mouse_position()
+	var hand = get_node("..")
+	var x_list = []
+	var y_cen
+	for card in hand.get_children():
+		var projection = camera.unproject_position(card.global_transform.origin)
+		x_list.append(projection.x)
+		y_cen = projection.y
+	var x_min = x_list.min()
+	var x_max = x_list.max()
+	var y_max = y_cen + 50
+	var y_min = y_cen - 50
+
+	if mpos.x < x_max and mpos.x > x_min and mpos.y < y_max and mpos.y > y_min:
+		dead_zoned = true
+	else:
+		dead_zoned = false
 
 func _unhandled_input(event):
 	if event is InputEventMouseButton:
@@ -130,6 +149,9 @@ func _unhandled_input(event):
 				if selected:
 					holded = true
 			else:
+				if not dead_zoned:
+					if on_hand:
+						drop_position = read_drop(scene, selected)
 				holded = false
 				selected = false
 
@@ -138,4 +160,14 @@ func _on_area_3d_mouse_entered():
 		selected = true
 
 func _on_area_3d_mouse_exited():
-	selected = false
+	if not holded:
+		selected = false
+
+func _process(delta):
+	rotate_card(selected, main_cam)
+	if not holded and on_hand:
+		select_card(selected)
+		update_cards(order, card_count)
+	cheack_dead_zone(main_cam)
+	drop_card(on_hand, drop_position)
+	print(dead_zoned)

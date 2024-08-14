@@ -1,8 +1,16 @@
-[gd_scene load_steps=2 format=3 uid="uid://ogyvgadruwq"]
+[gd_scene load_steps=3 format=3 uid="uid://ogyvgadruwq"]
+
+[ext_resource type="Texture2D" uid="uid://bc6uod80umgny" path="res://textures/vector/circle.svg" id="1_c20yg"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_riveq"]
 
 [node name="cursor" type="Node3D"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
 mesh = SubResource("SphereMesh_riveq")
+
+[node name="range_selector" type="Sprite3D" parent="."]
+transform = Transform3D(0.15, 0, 0, 0, -6.55671e-09, -0.15, 0, 0.15, -6.55671e-09, 0, 0.0465355, 0)
+visible = false
+texture = ExtResource("1_c20yg")
