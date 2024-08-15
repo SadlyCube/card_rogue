@@ -20,11 +20,14 @@ func _ready():
 
 func spawn_card(pref, card_no: int, hand_object):
 	var card = pref.instantiate()
+	var rng = RandomNumberGenerator.new()
+	var level = rng.randi_range(1, 5)
 	
 	card.order = card_no
 	card.card_count = card_count
 	card.position = Vector3(0,0,0)
 	card.card_text = str(card_bank)
+	card.card_level = level
 	hand_object.add_child(card)
 	
 	#card.position = lerp(card.position, card_position, 0.1)

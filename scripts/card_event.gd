@@ -5,6 +5,7 @@ var card_count: int = 1
 
 var effect: String = 'box'
 var card_text: String = 'Карта'
+var card_level: int = 1
 
 @export var box_pref: PackedScene
 
@@ -33,7 +34,7 @@ var main_cam: Camera3D
 func _ready():
 	scene = get_tree().root.get_child(0)
 	main_cam = get_node("../..")
-	update_card(self, card_text, effect)
+	update_card(self, card_text, effect, card_level)
 	#update_text(get_node_or_null("face/description"), card_text)
 	origin_y = position.y
 	desire_y = origin_y
@@ -46,10 +47,12 @@ func _ready():
 	
 	drop_size = scale/5
 
-func update_card(card: Node3D, text: String, card_type: String):
+func update_card(card: Node3D, text: String, card_type: String, level: int):
 	var desc = card.get_node("face/description")
 	var icon = card.get_node("face/icon")
+	var level_text = card.get_node("face/level")
 	update_text(desc, card_type)
+	update_text(level_text, str(card_level))
 	if card_type == 'box':
 		icon.texture = preload("res://textures/vector/card_icons/box.svg")
 	elif card_type == 'heal':
@@ -137,6 +140,7 @@ func cast_box(drop_point):
 	var box = box_pref.instantiate()
 	scene.add_child(box)
 	box.position = drop_point
+	box.scale = box.scale * card_level
 
 func cast_effect():
 	cast_box(drop_position)
