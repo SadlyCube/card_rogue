@@ -3,6 +3,9 @@ extends Node3D
 var order:int = 0
 var card_count: int = 1
 
+var effect: String = 'box'
+var card_text: String = 'Карта'
+
 @export var box_pref: PackedScene
 
 var dead_zoned: bool = false
@@ -30,15 +33,33 @@ var main_cam: Camera3D
 func _ready():
 	scene = get_tree().root.get_child(0)
 	main_cam = get_node("../..")
+	update_card(self, card_text, effect)
+	#update_text(get_node_or_null("face/description"), card_text)
 	origin_y = position.y
 	desire_y = origin_y
 	real_y = origin_y
+	
 	
 	origin_size = scale.y
 	desire_size = origin_size
 	real_size = origin_size
 	
 	drop_size = scale/5
+
+func update_card(card: Node3D, text: String, card_type: String):
+	var desc = card.get_node("face/description")
+	var icon = card.get_node("face/icon")
+	update_text(desc, card_type)
+	if card_type == 'box':
+		icon.texture = preload("res://textures/vector/card_icons/box.svg")
+	elif card_type == 'heal':
+		icon.texture = preload("res://textures/vector/card_icons/heal.svg")
+
+func update_text(object: Node3D, text: String):
+	if object:
+		object.text = text
+		
+	
 
 func mouse_position():
 	return get_viewport().get_mouse_position()
@@ -61,14 +82,26 @@ func rotate_card(selected, main_cam):
 	rotation = lerp(rotation, offset, 0.1)
 
 func select_card(selected):
+	var face = get_node("face")
+	var icon = face.get_node("icon")
+	var description = face.get_node("description")
+	var level = face.get_node("level")
 	if selected:
 		position.z = +1
 		desire_size = origin_size + 0.05
 		desire_y = origin_y + 0.5
+		face.render_priority = 1
+		icon.render_priority = 2
+		description.render_priority = 2
+		level.render_priority = 2
 	else:
 		position.z = 0
 		desire_size = origin_size
 		desire_y = origin_y
+		face.render_priority = 0
+		icon.render_priority = 1
+		description.render_priority = 1
+		level.render_priority = 1
 	real_y = lerp(real_y, desire_y, 0.1)
 	real_size = lerp(real_size, desire_size, 0.1)
 	scale = Vector3(real_size, real_size, real_size)

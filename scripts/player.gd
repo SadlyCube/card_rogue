@@ -24,6 +24,7 @@ func spawn_card(pref, card_no: int, hand_object):
 	card.order = card_no
 	card.card_count = card_count
 	card.position = Vector3(0,0,0)
+	card.card_text = str(card_bank)
 	hand_object.add_child(card)
 	
 	#card.position = lerp(card.position, card_position, 0.1)
@@ -123,4 +124,4 @@ func _process(delta):
 	check_hand(hand)
 	cursor_operator(get_tree().root.get_child(0))
 	process_actions()
-	print(card_bank)
+	#print(card_bank)

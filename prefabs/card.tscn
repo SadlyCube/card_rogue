@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://iq6annnenv8" path="res://textures/vector/card.svg" id="1_3d1xn"]
 [ext_resource type="Script" path="res://scripts/card_event.gd" id="1_ol2ru"]
 [ext_resource type="PackedScene" uid="uid://cid86hniwg0xj" path="res://prefabs/box.tscn" id="2_5b28j"]
-[ext_resource type="Texture2D" uid="uid://xc4najr4p06y" path="res://textures/vector/orange.svg" id="3_r4obm"]
+[ext_resource type="Texture2D" uid="uid://b7urg41ob7cfv" path="res://textures/vector/card_icons/heal.svg" id="4_lyj5b"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_o12eg"]
 size = Vector3(6, 10, 1)
@@ -13,20 +13,36 @@ transform = Transform3D(0.2, -3.55271e-15, -1.42109e-14, -1.24345e-14, 0.2, -2.9
 script = ExtResource("1_ol2ru")
 box_pref = ExtResource("2_5b28j")
 
-[node name="card_face" type="Sprite3D" parent="."]
-transform = Transform3D(1, -1.42109e-14, 0, 7.10543e-15, 1, 0, 4.26326e-14, 0, 1, 0, 0, 0)
-no_depth_test = true
-texture = ExtResource("1_3d1xn")
-
-[node name="Sprite3D" type="Sprite3D" parent="card_face"]
-transform = Transform3D(1, 7.19981e-21, -2.03288e-20, -7.67624e-20, 1, 0, 0, 0, 1, 0.324917, 2.86102e-06, 0.514832)
-texture = ExtResource("3_r4obm")
-
 [node name="Area3D" type="Area3D" parent="."]
 
 [node name="collision" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(1, 2.1176e-21, -2.03288e-20, -1.79995e-21, 1, 4.26326e-14, 0, -4.26326e-14, 1, 5.68434e-14, -0.139948, 0)
 shape = SubResource("BoxShape3D_o12eg")
+
+[node name="face" type="Sprite3D" parent="."]
+shaded = true
+texture = ExtResource("1_3d1xn")
+
+[node name="icon" type="Sprite3D" parent="face"]
+transform = Transform3D(1, -1.42109e-14, -2.03288e-20, 7.10535e-15, 1, 0, 4.26326e-14, 0, 1, 0, 0, 0.1)
+pixel_size = 0.005
+no_depth_test = true
+render_priority = 1
+texture = ExtResource("4_lyj5b")
+
+[node name="description" type="Label3D" parent="face"]
+transform = Transform3D(1, 4.23542e-22, -2.03288e-20, -1.79995e-21, 1, 0, 0, 0, 1, -1.04585e-13, -2.6246, 0.100001)
+pixel_size = 0.05
+render_priority = 1
+modulate = Color(0.0687983, 0.0687983, 0.0687983, 1)
+text = "Карта1"
+
+[node name="level" type="Label3D" parent="face"]
+transform = Transform3D(1, 4.23542e-22, -1.35525e-20, -1.79995e-21, 1, 0, 0, 0, 1, 0, 3.351, 0.1)
+pixel_size = 0.05
+render_priority = 1
+modulate = Color(0, 0, 0, 1)
+text = "0"
 
 [connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
 [connection signal="mouse_exited" from="Area3D" to="." method="_on_area_3d_mouse_exited"]
