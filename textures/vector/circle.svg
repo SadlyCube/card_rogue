@@ -3,8 +3,8 @@
 
 <svg
    width="210mm"
-   height="297mm"
-   viewBox="0 0 210 297"
+   height="210mm"
+   viewBox="0 0 210 210"
    version="1.1"
    id="svg5"
    inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
@@ -25,8 +25,8 @@
      showgrid="false"
      inkscape:lockguides="false"
      inkscape:zoom="0.52284039"
-     inkscape:cx="594.8278"
-     inkscape:cy="721.06136"
+     inkscape:cx="593.87149"
+     inkscape:cy="560.40047"
      inkscape:window-width="1920"
      inkscape:window-height="1008"
      inkscape:window-x="1920"
@@ -38,7 +38,8 @@
   <g
      inkscape:label="Слой 1"
      inkscape:groupmode="layer"
-     id="layer1">
+     id="layer1"
+     transform="translate(0,-42.5)">
     <path
        id="path31"
        style="fill:#ff9955;stroke-width:0.463022"

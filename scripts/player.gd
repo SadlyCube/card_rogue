@@ -7,26 +7,45 @@ var card_selected: bool = false
 
 const SPEED = 7.0
 const JUMP_VELOCITY = 0.0
-var card_count: int = 10
-var card_bank: int = 40
+var card_count: int = 0
+var deck = []
+#var deck_count: int # = 40
 var hand: Node3D
 var main_cam: Camera3D
+
+func generate_card_list(count: int, name: String):
+	var new_arr = []
+	new_arr.resize(count)
+	new_arr.fill(name)
+	return new_arr
 
 func _ready():
 	main_cam = get_node("main_cam")
 	hand = main_cam.get_node("hand")
+
+	deck += generate_card_list(5, 'heal')
+	deck += generate_card_list(5, 'box')
+	deck += generate_card_list(5, 'bomb')
+	deck += generate_card_list(5, 'fireball')
+	
+	#deck_count = len(deck)
+	
 	for no in range(card_count):
 		spawn_card(card_pref, no, hand)
 
-func spawn_card(pref, card_no: int, hand_object):
-	var card = pref.instantiate()
+func rng_int(low: int, high: int):
 	var rng = RandomNumberGenerator.new()
-	var level = rng.randi_range(1, 5)
+	return rng.randi_range(low, high)
+
+func spawn_card(pref, card_no: int, hand_object, type: String = 'box'):
+	var card = pref.instantiate()
+	
+	var level = rng_int(1,5)
 	
 	card.order = card_no
 	card.card_count = card_count
 	card.position = Vector3(0,0,0)
-	card.card_text = str(card_bank)
+	card.effect = type
 	card.card_level = level
 	hand_object.add_child(card)
 	
@@ -86,10 +105,11 @@ func cursor_operator(scene):
 			scene.get_node("cursor").queue_free() 
 
 func reload():
-	if card_count < 15 and card_bank > 0:
+	if card_count < 15 and len(deck) > 0:
+		var index = rng_int(0, len(deck)-1)
+		spawn_card(card_pref, card_count, hand, deck[index])
+		deck.pop_at(index)
 		card_count += 1
-		card_bank -= 1
-		spawn_card(card_pref, card_count-1, hand)
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")

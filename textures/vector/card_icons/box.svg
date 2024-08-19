@@ -3,8 +3,8 @@
 
 <svg
    width="210mm"
-   height="297mm"
-   viewBox="0 0 210 297"
+   height="188.80669mm"
+   viewBox="0 0 210 188.80669"
    version="1.1"
    id="svg252"
    inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
@@ -24,11 +24,11 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="0.41135429"
-     inkscape:cx="425.42403"
-     inkscape:cy="615.0416"
+     inkscape:cx="426.63953"
+     inkscape:cy="422.99304"
      inkscape:window-width="1920"
-     inkscape:window-height="1008"
-     inkscape:window-x="1920"
+     inkscape:window-height="1048"
+     inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
      inkscape:current-layer="layer1" />
@@ -36,16 +36,17 @@
      id="defs249">
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="-271.82673 : 337.27984 : 1"
-       inkscape:vp_y="0 : 3407.7691 : 0"
-       inkscape:vp_z="443.80479 : 337.27984 : 1"
-       inkscape:persp3d-origin="85.989031 : 168.59527 : 1"
+       inkscape:vp_x="-271.82673 : 229.08651 : 1"
+       inkscape:vp_y="0 : 3407.769 : 0"
+       inkscape:vp_z="443.80479 : 229.08651 : 1"
+       inkscape:persp3d-origin="85.989031 : 60.401951 : 1"
        id="perspective306" />
   </defs>
   <g
      inkscape:label="Слой 1"
      inkscape:groupmode="layer"
-     id="layer1">
+     id="layer1"
+     transform="translate(0,-51.000009)">
     <path
        id="rect1230-7-5"
        style="fill:#b3b3b3;stroke-width:1.32175"

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cqy0oq7jhuows"]
 
-[ext_resource type="PackedScene" uid="uid://dsc1fp0r3j4s5" path="res://prefabs/floor_tile.tscn" id="1_6cm4w"]
+[ext_resource type="PackedScene" uid="uid://dsc1fp0r3j4s5" path="res://prefabs/geometry/floor_tile.tscn" id="1_6cm4w"]
 [ext_resource type="PackedScene" uid="uid://cxuexq634wq6p" path="res://prefabs/player.tscn" id="2_7fgfu"]
 
 [node name="scene" type="Node3D"]

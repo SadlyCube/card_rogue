@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://c2ex7sc00j26e"]
+[gd_scene load_steps=7 format=3 uid="uid://c2ex7sc00j26e"]
 
 [ext_resource type="Texture2D" uid="uid://iq6annnenv8" path="res://textures/vector/card.svg" id="1_3d1xn"]
 [ext_resource type="Script" path="res://scripts/card_event.gd" id="1_ol2ru"]
-[ext_resource type="PackedScene" uid="uid://cid86hniwg0xj" path="res://prefabs/box.tscn" id="2_5b28j"]
+[ext_resource type="PackedScene" uid="uid://cid86hniwg0xj" path="res://prefabs/cast_items/projectiles/box.tscn" id="2_5b28j"]
+[ext_resource type="PackedScene" uid="uid://ch3ta4vbkcw0d" path="res://prefabs/cast_items/control_items/projectile_target.tscn" id="3_gj71o"]
 [ext_resource type="Texture2D" uid="uid://b7urg41ob7cfv" path="res://textures/vector/card_icons/heal.svg" id="4_lyj5b"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_o12eg"]
@@ -12,6 +13,7 @@ size = Vector3(6, 10, 1)
 transform = Transform3D(0.2, -3.55271e-15, -1.42109e-14, -1.24345e-14, 0.2, -2.98023e-08, 2.4869e-14, 2.98023e-08, 0.2, 0, 0, 0)
 script = ExtResource("1_ol2ru")
 box_pref = ExtResource("2_5b28j")
+projectile_target = ExtResource("3_gj71o")
 
 [node name="Area3D" type="Area3D" parent="."]
 
